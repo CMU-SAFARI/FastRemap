@@ -1,0 +1,8 @@
+[submodule "zlib"]
+	path = zlib
+	url = https://github.com/madler/zlib
+	ignore = dirty 
+[submodule "seqan2"]
+	path = seqan2
+	url = https://github.com/seqan/seqan
+	ignore = dirty 

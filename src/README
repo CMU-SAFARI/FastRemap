@@ -1,0 +1,15 @@
+// Interface for using IntervalTree class. 
+    typedef vector<std::size_t> countsVector;
+
+    // a simple sanity check
+    typedef IntervalTree<int, bool> ITree;
+    ITree::interval_vector sanityIntervals;
+    sanityIntervals.push_back(ITree::interval(60, 80, true));
+    sanityIntervals.push_back(ITree::interval(20, 40, true));
+    ITree sanityTree(std::move(sanityIntervals), 16, 1);
+
+    ITree::interval_vector sanityResults;
+    sanityResults = sanityTree.findOverlapping(30, 50);
+    assert(sanityResults.size() == 1);
+
+
