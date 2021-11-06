@@ -22,5 +22,5 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(BUILDDIR)/*.o $(SRCDIR)/*.o bin/FastRemap 
+	rm -f $(BUILDDIR)/*.o $(SRCDIR)/*.o bin/FastRemap FastRemap 
 
