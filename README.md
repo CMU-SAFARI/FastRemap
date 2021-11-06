@@ -72,9 +72,7 @@ Site](https://hgdownload.soe.ucsc.edu/downloads.html)
 
 For the below example, we will demonstrate the evaluation pipeline on ce10 and ce11. 
 First, download the following files: 
-- [ce10 reference](https://hgdownload.soe.ucsc.edu/goldenPath/ce10/bigZips/ce10.fa.gz)
-- [ce11 reference](https://hgdownload.soe.ucsc.edu/goldenPath/ce11/bigZips/ce11.fa.gz) 
-- [ce10Toce11 chain file](ce10ToCe11.over.chain.gz) 
+- [ce10ToCe11.over.chain](ce10ToCe11.over.chain.gz) 
 - [SRR3536210.bam](https://www.ncbi.nlm.nih.gov/sra/SRR3536210) 
 
 First using any read mapping tool, map the SRR3536210.bam file to the old reference genome (e.g., ce10). 
