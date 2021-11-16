@@ -11,6 +11,7 @@
 
 int read_chain_file(std::string, std::map<std::string, int>&, std::map<std::string, int>&, std::map<std::string, ITree>&); 
 int map_coordinates(std::map<std::string, ITree>&, std::string, int, int, std::vector<std::tuple<std::string, int, int, std::string>>&, std::string, bool); 
+bool check_bed12(std::string bedline);
 int intersectBed(std::string, int, int, std::string, int, int, std::string&, int&, int&); 
 std::string update_chromID(std::string c_temp, std::string c_target); 
 int get_reference_length(seqan::String<seqan::CigarElement<>>); 

@@ -225,6 +225,74 @@ std::string update_chromID(std::string c_temp, std::string c_target) {
     return ""; 
 } 
 
+bool check_bed12(std::string bedline){
+    // Check if bed12 format is correct or not.
+
+    std::vector<std::string> fields; 
+    std::stringstream ss(bedline); 
+    std::string token; 
+    while(ss >> token) { 
+        fields.push_back(token); 
+    }
+
+    if(fields.size() != 12)
+        return false;
+    
+    if((fields[5] != "+") && (fields[5] != "-") && (fields[5] != ".")){
+        return false;
+    }
+
+    int chromStart;
+    int chromEnd;
+	int thickStart;
+	int thickEnd;
+	int blockCount;
+
+    std::stringstream blockStartsStream(fields[11]);
+    std::stringstream blockSizesStream(fields[10]);
+    std::vector<int> blockStarts;
+    std::vector<int> blockSizes;
+    std::string item;
+
+    try{	 
+        chromStart = std::stoi(fields[1]);
+		chromEnd = std::stoi(fields[2]);
+		thickStart = std::stoi(fields[6]);
+		thickEnd = std::stoi(fields[7]);
+		blockCount = std::stoi(fields[9]);
+
+        while(std::getline(blockStartsStream, item, ','))
+            blockStarts.push_back(std::stoi(item));
+        while(std::getline(blockSizesStream, item, ','))
+            blockSizes.push_back(std::stoi(item));         
+    }
+    catch(std::exception &err){
+        return false;
+    }
+
+    if((chromStart > chromEnd) || (thickStart > thickEnd))
+        return false;
+    if((thickStart < chromStart) || (thickEnd > chromEnd))
+        return false;
+    if(blockSizes.size() != blockCount)
+        return false;
+    if(blockStarts.size() != blockCount)
+        return false;
+	if(blockCount < 1)
+        return false;
+
+    for(int i = 0; i < blockSizes.size(); i++){
+        if(blockSizes[i] < 0)
+            return false;
+    }
+
+    for(int i = 0; i < blockStarts.size(); i++){
+        if(blockStarts[i] < 0)
+            return false;
+    }
+    return true;
+}
+
 int intersectBed(std::string chr1, int st1, int end1, std::string chr2, int st2, int end2, std::string& ret_chr, int& ret_st, int& ret_end) { 
     
     if (st1 > end1 || st2 > end2) { 
