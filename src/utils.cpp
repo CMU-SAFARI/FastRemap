@@ -141,12 +141,14 @@ int map_coordinates(std::map<std::string, ITree>& mapping, std::string q_chr, in
         mapping_query = tmp2_q_chr; 
     }
     else {
+//        std::cout << "INSIDE map_coordinates() no matching query name found\n";
         return -1; 
     } 
 
 	targets = mapping[mapping_query].findOverlapping(q_start, q_end); 
 
     if (targets.size() == 0) { 
+  //      std::cout << "INSIDE map_coordinates() no overlapping interval found\n";
         return -1; 
     } 
     else if (targets.size() >= 1) { 

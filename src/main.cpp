@@ -4,6 +4,7 @@
 
 #include "utils.h" 
 #include "mapbam.h" 
+#include "mapbed.h"
 #include "IntervalTree.h" 
 #include "common.h" 
 
@@ -92,6 +93,30 @@ int main(int argc, char **argv) {
 
 
 				crossmap_bam_file(mapTree, chain_file, in_file, unmapped_file, out_file, target_chrom_size, insert_size, insert_size_stdev, insert_size_fold, addtags); 
+			} 
+		}
+		else if (strcmp(argv[optind], "bed") == 0) { 
+
+			if (argc >= 3) { 
+				// TODO: add optional arguments 
+				chain_file = std::string(argv[optind+1]);
+				in_file = std::string(argv[optind+2]); 
+				unmapped_file = std::string(argv[optind+3]);  
+				out_file = "out";
+				if (argc >= 4) { 
+					out_file = std::string(argv[optind+4]); 
+				} 
+
+				std::map<std::string, int> target_chrom_size; 
+				std::map<std::string, int> source_chrom_size; 
+				std::map<std::string, ITree> mapTree; 
+				read_chain_file(chain_file, target_chrom_size, source_chrom_size, mapTree); 
+
+				std::cout << "Input File:    " << in_file << "\n";  
+				std::cout << "Unmapped File: " << unmapped_file << "\n";  
+				std::cout << "Output File:   " << out_file << "\n"; 
+
+				crossmap_bed_file(mapTree, chain_file, in_file, unmapped_file, out_file); 
 			} 
 		} 
 	} 

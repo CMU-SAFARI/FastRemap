@@ -120,9 +120,12 @@ int crossmap_bed_file(std::map<std::string, ITree>& mapping, std::string chainfi
                         strand = "-";
                     
                 }
+          //      std::cout << "chr: " << chrom << " start: " << start << " end: " << end << std::endl; 
 
                 // find the chains this bed interval is intersecting
-                map_coordinates(mapping, chrom, start, end, matches, strand, false); 
+                int retval = map_coordinates(mapping, chrom, start, end, matches, strand, false); 
+                // std::cout << "return value of map_coordinates : " << retval << std::endl;
+            //    std::cout << "matches.size(): " << matches.size() << std::endl; 
 
                 // analyze the intersecting chains
                 // no match or incorrect number of matches
@@ -136,8 +139,9 @@ int crossmap_bed_file(std::map<std::string, ITree>& mapping, std::string chainfi
                 else if (matches.size() == 2) { 
 					// reset fields
 					fields[0] = std::get<0>(matches[1]);
-					fields[1] = std::get<1>(matches[1]);
-					fields[2] = std::get<2>(matches[1]);
+					fields[1] = std::to_string(std::get<1>(matches[1]));
+					fields[2] = std::to_string(std::get<2>(matches[1]));
+              //      std::cout << "1. fields[0]: " << fields[0] << " fields[1]: " << fields[1] << " fields[2]: " << fields[2] << std::endl; 
 
                     // update the strand information
                     for(int index = 0; index < fields.size(); index++){
@@ -145,6 +149,8 @@ int crossmap_bed_file(std::map<std::string, ITree>& mapping, std::string chainfi
                             fields[index] = std::get<3>(matches[1]);
                         }
                     }
+                //    std::cout << "2. fields[0]: " << fields[0] << " fields[1]: " << fields[1] << " fields[2]: " << fields[2] << std::endl; 
+
                     // write the updated interval to out file
                     for(int index = 0; index < fields.size(); index++){
                         OUTFILE << fields[index] << "\t"; 
@@ -158,8 +164,8 @@ int crossmap_bed_file(std::map<std::string, ITree>& mapping, std::string chainfi
                     for(int match_index = 1; match_index < matches.size(); match_index = match_index + 2){
                         count += 1;
 						fields[0] = std::get<0>(matches[match_index]);
-						fields[1] = std::get<1>(matches[match_index]);
-						fields[2] = std::get<2>(matches[match_index]);
+						fields[1] = std::to_string(std::get<1>(matches[match_index]));
+						fields[2] = std::to_string(std::get<2>(matches[match_index]));
 
                         // update the strand information
                         for(int index = 0; index < fields.size(); index++){
@@ -180,6 +186,7 @@ int crossmap_bed_file(std::map<std::string, ITree>& mapping, std::string chainfi
 				    
             }
 
+            // WARNING: there might be an issue regarding int-string conversion, check it later
             // deal with bed12 and bed12+8 (genePred format), THE SECOND ONE ACTUALLY NOT SUPPORTED
             else if((fields.size() == 12) || (fields.size() == 20)){
                 bool fail_flag = false;
