@@ -82,7 +82,7 @@ Using the linux time command, get and write all runtime and memory stats output
 files to subdirectories ./evaluation/CrossMap and ./evaluation/FastRemap
 (depending on which tool was used), e.g.,: 
 ``` 
-/usr/bin/time -v -p -o ./evaluation/FastRemap/ce10_ce11.time FastRemap -c bam ce10ToCe11.over.chain ce10_SRR3536210.bam fastremap_ce10_ce11_unmapped.bed fastremap_ce10_ce11.bam 
+/usr/bin/time -v -p -o ./evaluation/FastRemap/ce10_ce11.time FastRemap -c bam ce10ToCe11.over.chain ce10_SRR3536210.bam fastremap_ce10_ce11_unmapped.bed fastremap_ce10_ce11
 /usr/bin/time -v -p -o ./evaluation/crossmap/ce10_ce11.time CrossMap.py bam ce10ToCe11.over.chain ce10_SRR3536210.bam ce10_ce11_unmapped.bed > crossmap_ce10_ce11.bam 
 ``` 
 
