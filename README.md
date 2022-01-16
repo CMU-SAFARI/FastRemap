@@ -37,18 +37,27 @@ FastRemap$ make
 
 ## To run: 
 ```
-./FastRemap bam [chain file] [input bam file] [unmapped file] [out file]
+./FastRemap [file type] [chain file] [input file] [output unmapped file] [output file]
 ```
-test using the small sample files in test_data folder 
-- input / output files should be paths relative to the current directory. 
-- e.g., 
-	./FastRemap bam test_data/ce6ToCe10.over.chain test_data/little.bam test.unmapped test.out
+
+Positional arguments: 
+      [file_type]:            bam, sam, or bed file depending on input file
+      [chain file]:           chain file (https://genome.ucsc.edu/goldenPath/help/chain.html) describes regions of similarity between references
+      [input file]:           file containing elements to be remapped based on chain file
+      [output unmapped file]: file containing all the elements that couldnt be remapped from the input file based on the provided chain file
+      [output file]:          file containing all the remapped elements from the input file
 
 optional arguments
 - --append-tags (-a) to append tags in output bam file 
 - --mean (-m) to set insert size 
 - --stdev (-s) to set insert_size_stdev
 - --times (-t) to set insert_size_fold 
+
+BAM test using the small sample files in test_data folder 
+- input / output files should be paths relative to the current directory. 
+- e.g., 
+	./FastRemap bam test_data/ce6ToCe10.over.chain test_data/little.bam test.unmapped test.out
+
 
 ## To validate and compare two bam outputs: 
 ```
@@ -82,7 +91,7 @@ Using the linux time command, get and write all runtime and memory stats output
 files to subdirectories ./evaluation/CrossMap and ./evaluation/FastRemap
 (depending on which tool was used), e.g.,: 
 ``` 
-/usr/bin/time -v -p -o ./evaluation/FastRemap/ce10_ce11.time FastRemap -c bam ce10ToCe11.over.chain ce10_SRR3536210.bam fastremap_ce10_ce11_unmapped.bed fastremap_ce10_ce11
+/usr/bin/time -v -p -o ./evaluation/FastRemap/ce10_ce11.time FastRemap bam ce10ToCe11.over.chain ce10_SRR3536210.bam fastremap_ce10_ce11_unmapped.bed fastremap_ce10_ce11
 /usr/bin/time -v -p -o ./evaluation/crossmap/ce10_ce11.time CrossMap.py bam ce10ToCe11.over.chain ce10_SRR3536210.bam ce10_ce11_unmapped.bed > crossmap_ce10_ce11.bam 
 ``` 
 

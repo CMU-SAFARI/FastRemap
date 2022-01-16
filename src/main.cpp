@@ -18,6 +18,22 @@
 #include<unistd.h>
 #include<getopt.h> 
 
+void print_help() {
+	std::cout << "Usage: ./FastRemap [file_type] [chain file] [input file] [output unmapped file] [output file]\n\n"; 
+	std::cout << "Positional arguments:\n"; 
+	std::cout << "      [file_type]:            bam, sam, or bed file depending on input file\n"; 
+	std::cout << "      [chain file]:           chain file (https://genome.ucsc.edu/goldenPath/help/chain.html) describes regions of similarity between references\n"; 
+	std::cout << "      [input file]:           file containing elements to be remapped based on chain file\n";  
+	std::cout << "      [output unmapped file]: file containing all the elements that couldnt be remapped from the input file based on the provided chain file\n"; 
+	std::cout << "      [output file]:          file containing all the remapped elements from the input file\n\n"; 
+
+	std::cout << "Optional arguments:\n"; 
+	std::cout << "      --append-tags (-a) to append tags in output bam file\n"; 
+	std::cout << "      --mean (-m) to set insert size\n"; 
+	std::cout << "      --stdev (-s) to set insert_size_stdev\n"; 
+	std::cout << "      --times (-t) to set insert_size_fold\n"; 
+} 
+
 int main(int argc, char **argv) {
 	// if enough arguments, check if the second == "bam" 
  	// chain file, in_file, unmapped_file, outfile 
@@ -144,6 +160,12 @@ int main(int argc, char **argv) {
 				crossmap_bed_file(mapTree, chain_file, in_file, unmapped_file, out_file); 
 			} 
 		} 
+		else { 
+			print_help(); 
+		} 
+	} 
+	else {
+		print_help(); 
 	} 
 
 	return 0; 
