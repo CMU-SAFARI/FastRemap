@@ -41,11 +41,11 @@ FastRemap$ make
 ```
 
 Positional arguments: 
-      [file_type]:            bam, sam, or bed file depending on input file
-      [chain file]:           chain file (https://genome.ucsc.edu/goldenPath/help/chain.html) describes regions of similarity between references
-      [input file]:           file containing elements to be remapped based on chain file
-      [output unmapped file]: file containing all the elements that couldnt be remapped from the input file based on the provided chain file
-      [output file]:          file containing all the remapped elements from the input file
+- [file_type]:            bam, sam, or bed file depending on input file
+- [chain file]:           chain file (https://genome.ucsc.edu/goldenPath/help/chain.html) describes regions of similarity between references
+- [input file]:           file containing elements to be remapped based on chain file
+- [output unmapped file]: file containing all the elements that couldnt be remapped from the input file based on the provided chain file
+- [output file]:          file containing all the remapped elements from the input file
 
 optional arguments
 - --append-tags (-a) to append tags in output bam file 
