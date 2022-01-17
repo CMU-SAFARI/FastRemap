@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
 			} 
 		}
 		// parsing SAM file 
-		if (strcmp(argv[optind], "sam") == 0) { 
+		else if (strcmp(argv[optind], "sam") == 0) { 
 
 			if (argc >= 3) { 
 				chain_file = std::string(argv[optind+1]);
