@@ -104,6 +104,6 @@ python plot_runtime.py
 
 ## Docker Support 
 
-- [https://hub.docker.com/r/alkanlab/fastremap](DockerHub) 
+- [DockerHub](https://hub.docker.com/r/alkanlab/fastremap) 
 - Dockerfile in top of the tree 
 
