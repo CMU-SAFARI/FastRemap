@@ -81,20 +81,18 @@ Site](https://hgdownload.soe.ucsc.edu/downloads.html)
 - C. elegans (ce2, ce4, ce6, ce10, ce11) 
 - yeast (sacCer1, sacCer2, sacCer3) 
 
-For the below example, we will demonstrate the evaluation pipeline on ce10 and ce11. 
+For the below example, we will demonstrate the evaluation pipeline on sacCer1 and sacCer2. 
 First, download the following files: 
-- [ce10ToCe11.over.chain](ce10ToCe11.over.chain.gz) 
-- [SRR3536210.bam](https://www.ncbi.nlm.nih.gov/sra/SRR3536210) 
-
-First using any read mapping tool, map the SRR3536210.bam file to the old reference genome (e.g., ce10). 
-- output to ce10_SRR3536210.bam 
+- [sacCer1ToSacCer2.over.chain](https://hgdownload.soe.ucsc.edu/goldenPath/sacCer1/liftOver/sacCer1ToSacCer2.over.chain.gz) 
+- [sacCer1_ERR1938683.bam](https://zenodo.org/record/5945259#.YfyNwRPMI0o) 
+	- Alternatively, download an SRA file of sacCer and map it to the old reference genome (e.g., sacCer1), outputting as sacCer1_ERR1938683.bam
 
 Using the linux time command, get and write all runtime and memory stats output
 files to subdirectories ./evaluation/CrossMap and ./evaluation/FastRemap
 (depending on which tool was used), e.g.,: 
 ``` 
-/usr/bin/time -v -p -o ./evaluation/FastRemap/ce10_ce11.time FastRemap bam ce10ToCe11.over.chain ce10_SRR3536210.bam fastremap_ce10_ce11_unmapped.bed fastremap_ce10_ce11
-/usr/bin/time -v -p -o ./evaluation/crossmap/ce10_ce11.time CrossMap.py bam ce10ToCe11.over.chain ce10_SRR3536210.bam ce10_ce11_unmapped.bed > crossmap_ce10_ce11.bam 
+/usr/bin/time -v -p -o ./evaluation/FastRemap/sacCer1_sacCer2.time FastRemap bam sacCer1ToSacCer2.over.chain sacCer1_ERR1938683.bam fastremap_sacCer1_sacCer2_unmapped.bed fastremap_sacCer1_sacCer2
+/usr/bin/time -v -p -o ./evaluation/crossmap/sacCer1_sacCer2.time CrossMap.py bam sacCer1ToSacCer2.over.chain sacCer1_ERR1938683.bam sacCer1_sacCer2_unmapped.bed > crossmap_sacCer1_sacCer2.bam 
 ``` 
 
 Finally run the plotting script under the evaluation subdirectory: 
@@ -103,4 +101,9 @@ cd evaluation
 python plot_runtime.py 
 ```
 
+
+## Docker Support 
+
+- [https://hub.docker.com/r/alkanlab/fastremap](DockerHub) 
+- Dockerfile in top of the tree 
 
