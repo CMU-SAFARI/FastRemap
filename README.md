@@ -11,7 +11,10 @@ that we address with FastRemap. From our evaluation, we find that FastRemap
 provides up to a 7.19x speedup, uses as low as 61.7% of the peak memory
 consumption, and enables end-to-end downstream analysis compared to CrossMap. 
 
-A preliminary version of the paper is available at http://arxiv.org/abs/2201.06255
+The initial release of FastRemap is described in the following paper:
+> Jeremie S. Kim, Can Firtina, Meryem Banu Cavlak, Damla Senol Cali, Can Alkan, Onur Mutlu.
+> "[**FastRemap: A Tool for Quickly Remapping Reads between Genome Assemblies**](https://arxiv.org/pdf/2201.06255.pdf)".
+> Preprint in _arXiv_, Jan 17, 2022.
 
 [\[1\] Zhao et al. *CrossMap: A Versatile Tool for Coordinate Conversion between Genome Assemblies* Bioinformatics 2014.](https://academic.oup.com/bioinformatics/article/30/7/1006/234947?login=true) 
 
