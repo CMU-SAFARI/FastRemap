@@ -315,6 +315,50 @@ int intersectBed(std::string chr1, int st1, int end1, std::string chr2, int st2,
     return 0; 
 }
 
+std::string revcomp_DNA(std::string dna, bool extended){
+    std::map<std::string, std::string> extended_map = {
+                { "A", "T"}, { "C", "G"}, { "G", "C"}, { "T", "A"},
+                { "Y", "R"}, { "R", "Y"}, { "S", "W"}, { "W", "S"},
+                { "K", "M"}, { "M", "K"}, { "B", "V"}, { "V", "B"},
+                { "D", "H"}, { "H", "D"}, { "N", "N"}, { ".", "."}, { "*", "*"}};
+    std::map<std::string, std::string> not_extended_map = {
+                { "A", "T"}, { "C", "G"}, { "G", "C"}, { "T", "A"},
+                { "N", "N"}, { "X", "X"}};
+
+	// seq = dna.replace(' ','').upper()
+
+    std::string reversed_dna = "";
+    std::string current_rev = "";
+    if(extended){
+        for(int i = 0; i < dna.length(); i++){
+            if(dna.substr(i, 1) == " ")
+                ;
+            else if(dna.substr(i, 1) == ","){
+                reversed_dna = reversed_dna + "," + current_rev;
+                current_rev = "";
+            }
+            else
+                current_rev = extended_map.at(dna.substr(i, 1));
+        }
+    }
+    else{
+        for(int i = 0; i < dna.length(); i++){
+            if(dna.substr(i, 1) == " ")
+                ;
+            else if(dna.substr(i, 1) == ","){
+                reversed_dna = reversed_dna + "," + current_rev;
+                current_rev = "";
+            }
+            else
+                current_rev = not_extended_map.at(dna.substr(i, 1));
+        }   
+    }
+    reversed_dna = reversed_dna + "," + current_rev;
+    reversed_dna = reversed_dna.substr(1); // to remove the , in the beginning
+
+    return reversed_dna;
+}
+
 int get_reference_length(seqan::String<seqan::CigarElement<>> cigar) { 
     int len = 0; 
 

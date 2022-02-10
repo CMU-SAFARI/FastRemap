@@ -14,6 +14,7 @@ int map_coordinates(std::map<std::string, ITree>&, std::string, int, int, std::v
 bool check_bed12(std::string bedline);
 int intersectBed(std::string, int, int, std::string, int, int, std::string&, int&, int&); 
 std::string update_chromID(std::string c_temp, std::string c_target); 
+std::string revcomp_DNA(std::string dna, bool extended);
 int get_reference_length(seqan::String<seqan::CigarElement<>>); 
 
 // string trimming functions
