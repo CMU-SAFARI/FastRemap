@@ -54,12 +54,27 @@ void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile
         std::cout << "Filter out variants [reference_allele == alternative_allele] ..." << std::endl;
 
 
-    // TODO: convert these parts into seqan code
+	// index refgenome file if it isn't already available. 
+    CharString pathToFile = seqan::getAbsolutePath(refgenome.c_str());
+    FaiIndex faiIndex;
+	
+	std::string refgenome_fai_fn = refgenome + ".fai"; 
+	if (!std::filesystem::exists(refgenome_fai_fn)) { 
+		std::cout << "Creating index for: " << refgenome << "\n"; 
+
+		if (!seqan::build(faiIndex, seqan::toCString(pathToFile), refgenome_fai_fn.c_str())) { 
+			std::cout << "ERROR: Could not build the index!\n";
+		} 
+		if (!seqan::open(faiIndex, seqan::toCString(pathToFile), refgenome_fai_fn.c_str())) { 
+			std::cout << "ERROR: Could not load FAI index " << refgenome_fai_fn << "\n";
+		} 
+	} 
+	if (!seqan::save(faiIndex, refgenome_fai_fn.c_str())) {
+        std::cout << "ERROR: Could not save the index to file!\n";
+	} 
+
 	// index refegenome file if it hasn't been done
-    /**
-	if not os.path.exists(refgenome + '.fai'):
-		logging.info("Creating index for: %s" % refgenome)
-		pysam.faidx(refgenome)
+    /** TODO: 
 	if os.path.getmtime(refgenome + '.fai') < os.path.getmtime(refgenome):
 		logging.info("Index file is older than reference genome. Re-creating index for: %s" % refgenome)
 		pysam.faidx(refgenome)
@@ -185,6 +200,7 @@ void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile
                     // update start coordinate
                     fields[1] = std::to_string(target_start + 1);
                     
+					target_chr = update_chromID(seqan::toCString(sequenceName(faiIndex, 0)), target_chr); 
                     // TODO: convert these parts into seqan code
                     // update ref allele
                     /**
