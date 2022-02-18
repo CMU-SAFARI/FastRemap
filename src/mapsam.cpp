@@ -1,4 +1,4 @@
-#include "mapbam.h" 
+#include "mapsam.h" 
 #include "common.h" 
 #include "utils.h" 
 
@@ -18,14 +18,14 @@
 
 typedef typename seqan::BamHeaderRecord::TTag TTag; 
 
-int crossmap_bam_file(std::map<std::string, ITree>& mapping, std::string chainfile, std::string infile, std::string unmapped_file, std::string outfile_prefix, std::map<std::string, int> chrom_size, int IS_size, int IS_std, int fold, bool addtag) { 
+int crossmap_sam_file(std::map<std::string, ITree>& mapping, std::string chainfile, std::string infile, std::string unmapped_file, std::string outfile_prefix, std::map<std::string, int> chrom_size, int IS_size, int IS_std, int fold, bool addtag) { 
     // must be a bam file 
     std::string file_type; 
     std::string file_extension = infile.substr(infile.find_last_of(".") + 1); 
     std::vector<std::string> comments; 
-    if (file_extension == "bam") { 
-        file_type = "BAM"; 
-        comments.push_back("ORIGINAL_BAM_FILE=" + std::string(std::filesystem::current_path()) + "/" + infile); 
+    if (file_extension == "sam") { 
+        file_type = "SAM"; 
+        comments.push_back("ORIGINAL_SAM_FILE=" + std::string(std::filesystem::current_path()) + "/" + infile); 
         // TODO: check header. 
     } 
     else {
@@ -37,8 +37,8 @@ int crossmap_bam_file(std::map<std::string, ITree>& mapping, std::string chainfi
     // get output file names.  
     std::string outfile_name = outfile_prefix;
     if (outfile_prefix != "") { 
-        if (file_type == "BAM") {
-            outfile_name = outfile_name + ".bam"; 
+        if (file_type == "SAM") {
+            outfile_name = outfile_name + ".sam"; 
         } 
     } 
     else { 
@@ -53,7 +53,7 @@ int crossmap_bam_file(std::map<std::string, ITree>& mapping, std::string chainfi
 
 	std::ofstream sam_out;
 	sam_out.open(test_outfile_name2);  
-	seqan::BamFileOut bamFileOut(seqan::context(bamFileIn), sam_out, seqan::Bam()); 
+	seqan::BamFileOut bamFileOut(seqan::context(bamFileIn), sam_out, seqan::Sam()); 
 
 
 	/////////////////////////////////////////////////////////
@@ -506,3 +506,4 @@ int crossmap_bam_file(std::map<std::string, ITree>& mapping, std::string chainfi
 
     return 0; 
 }
+
