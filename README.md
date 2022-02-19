@@ -64,9 +64,9 @@ BAM test using the small sample files in test_data folder
 	./FastRemap bam test_data/ce6ToCe10.over.chain test_data/little.bam test.unmapped test.out
 
 
-## To validate and compare two bam outputs: 
+## To validate and compare two SAM outputs: 
 ```
-python ./validation/compare_outputs.py [input bam file 1] [input bam file 2] 
+python ./validation/compare_outputs.py [input sam file 1] [input sam file 2] 
 ```
 
 ## To replicate results in the paper: 
