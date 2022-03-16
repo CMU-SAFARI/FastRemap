@@ -200,18 +200,60 @@ void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile
                     // update start coordinate
                     fields[1] = std::to_string(target_start + 1);
                     
+                    // target_chr = update_chromID(refFasta.references[0], target_chr)
 					target_chr = update_chromID(seqan::toCString(sequenceName(faiIndex, 0)), target_chr); 
-                    // TODO: convert these parts into seqan code
+                    unsigned idx = 0;
+                    if (!getIdByName(idx, faiIndex, target_chr)){
+                        UNMAP << line << "\tERROR: FAI index has no entry for" << target_chr << "\n";
+                        fail = fail + 1;
+                        continue;
+                    }
+
+                    CharString target_Cstring;
+
                     // update ref allele
-                    /**
-                    target_chr = update_chromID(refFasta.references[0], target_chr)
-                    try:
-                        fields[3] = refFasta.fetch(target_chr,target_start,target_end).upper()
-                    except:
-                        print (line + "\tFail(KeyError)", file=UNMAP)
-                        fail += 1
-                        continue
-                    */
+                    try{
+                        // fields[3] = refFasta.fetch(target_chr,target_start,target_end).upper()
+                        seqan::readRegion(target_Cstring, faiIndex, (unsigned int) idx, (unsigned int) target_start, (unsigned int) target_end);   
+                        std::string s_test = seqan::toCString(target_Cstring);
+                        fields[3] = s_test;        
+                    }
+                    catch(std::exception &err){
+                        //print (line + "\tFail(KeyError)", file=UNMAP)
+                        //fail += 1
+                        // continue
+                        UNMAP << line << "\tFail(KeyError)\n";
+                        fail = fail + 1;
+                        continue;
+                    }
+
+                    // for insertions and deletions in a VCF file,  the first nucleotide in REF and ALT 
+				    // fields correspond to the nucleotide at POS in the *reference genome*
+				    std::string ref_allele = fields[3];
+                    std::vector<std::string> alt_alleles;
+                    std::vector<std::string> alt_alleles_updated;
+                    std::stringstream ss_alleles(fields[4]);
+
+                    while(ss_alleles.good()){
+                        std::string substr;
+                        getline(ss_alleles, substr, ',');
+                        alt_alleles.push_back(substr);
+                    }
+
+                    for(int index = 0; index < alt_alleles.size(); index++){
+                        if(ref_allele.length() != alt_alleles[index].length()){
+                            std::string tmp = ref_allele[0] + alt_alleles[index].substr(1); // replace the 1st nucleotide of ALT
+                            alt_alleles_updated.push_back(tmp);
+                        } 
+                        else{
+                            alt_alleles_updated.push_back(alt_alleles[index]);
+                        }
+                    }
+
+                    fields[4] = alt_alleles_updated[0];
+                    for(int index = 1; index < alt_alleles_updated.size(); index++){
+                        fields[4] = fields[4] + "," + alt_alleles_updated[index];
+                    }
 
                     // update END if any
                     std::regex regex_end ("END=[0-9]+");
