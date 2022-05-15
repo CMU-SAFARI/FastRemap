@@ -24,7 +24,7 @@ The initial release of FastRemap is described in the following paper:
 
 ## To clone: 
 ```
-git clone --recurse-submodules git@github.com:CMU-SAFARI/FastRemap.git FastRemap 
+git clone --recurse-submodules https://github.com/CMU-SAFARI/FastRemap.git FastRemap 
 ```
 
 ## To compile:
@@ -42,10 +42,10 @@ FastRemap$ make
 
 ## To run: 
 ```
-./FastRemap [file type] [chain file] [input file] [output unmapped file] [output file]
+./FastRemap -f [file type] -c [chain file] -i [input file] -u [output unmapped file] -o [output file]
 ```
 
-Positional arguments: 
+Required arguments: 
 - [file_type]:            bam, sam, or bed file depending on input file
 - [chain file]:           chain file (https://genome.ucsc.edu/goldenPath/help/chain.html) describes regions of similarity between references
 - [input file]:           file containing elements to be remapped based on chain file
@@ -61,7 +61,7 @@ optional arguments
 BAM test using the small sample files in test_data folder 
 - input / output files should be paths relative to the current directory. 
 - e.g., 
-	./FastRemap bam test_data/ce6ToCe10.over.chain test_data/little.bam test.unmapped test.out
+	./FastRemap -f bam -c test_data/ce6ToCe10.over.chain -i test_data/little.bam -u test.unmapped -o test.out
 
 
 ## To validate and compare two SAM outputs: 
@@ -94,8 +94,8 @@ Using the linux time command, get and write all runtime and memory stats output
 files to subdirectories ./evaluation/CrossMap and ./evaluation/FastRemap
 (depending on which tool was used), e.g.,: 
 ``` 
-/usr/bin/time -v -p -o ./evaluation/FastRemap/sacCer1_sacCer2.time FastRemap bam sacCer1ToSacCer2.over.chain sacCer1_ERR1938683.bam fastremap_sacCer1_sacCer2_unmapped.bed fastremap_sacCer1_sacCer2
-/usr/bin/time -v -p -o ./evaluation/crossmap/sacCer1_sacCer2.time CrossMap.py bam sacCer1ToSacCer2.over.chain sacCer1_ERR1938683.bam sacCer1_sacCer2_unmapped.bed > crossmap_sacCer1_sacCer2.bam 
+/usr/bin/time -v -p -o ./evaluation/FastRemap/sacCer1_sacCer2.time FastRemap -f bam -c sacCer1ToSacCer2.over.chain -i sacCer1_ERR1938683.bam -u fastremap_sacCer1_sacCer2_unmapped.bed -o fastremap_sacCer1_sacCer2.bam
+/usr/bin/time -v -p -o ./evaluation/crossmap/sacCer1_sacCer2.time CrossMap.py bam sacCer1ToSacCer2.over.chain sacCer1_ERR1938683.bam > crossmap_sacCer1_sacCer2.bam 
 ``` 
 
 Finally run the plotting script under the evaluation subdirectory: 

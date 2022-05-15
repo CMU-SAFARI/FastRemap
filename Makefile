@@ -4,9 +4,8 @@ SRCEXT = cpp
 OBJEXT = o 
 BUILDDIR = build
 LDFLAGS = -L./zlib -lz -lpthread
-CFLAGS = -c -O3 -Wall -std=c++2a -pthread -I ./seqan2/include -I./seqan2/include -I./zlib -DSEQAN_HAS_ZLIB=1 
+CFLAGS = -c -O3 -std=c++2a -pthread -I ./seqan2/include -I./seqan2/include -I./zlib -O3 -DNDEBUG -DSEQAN_HAS_ZLIB=1 -DSEQAN_DISABLE_VERSION_CHECK=YES -W -Wall -pedantic
 SOURCES = $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
-
 
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
