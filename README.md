@@ -23,25 +23,31 @@ The initial release of FastRemap is described in the following paper:
     - if not using gcc 10 or higher, can use the following library: https://github.com/tcbrindle/span
 
 ## To clone: 
-```
+```bash
 git clone --recurse-submodules https://github.com/CMU-SAFARI/FastRemap.git FastRemap 
 ```
 
 ## To compile:
 ### zlib: 
-```
+```bash
 FastRemap/zlib$ ./configure
 FastRemap/zlib$ make
 ```
 
 ### FastRemap: 
 may need to use '-lstdc++fs' in LDFLAGS depending on compiler / system. 
-```
+```bash
 FastRemap$ make 
 ```
 
-## To run: 
+## Printing the help message
+
+```bash
+./FastRemap -h
 ```
+
+## To run: 
+```bash
 ./FastRemap -f [file type] -c [chain file] -i [input file] -u [output unmapped file] -o [output file]
 ```
 
@@ -60,12 +66,13 @@ optional arguments
 
 BAM test using the small sample files in test_data folder 
 - input / output files should be paths relative to the current directory. 
-- e.g., 
-	./FastRemap -f bam -c test_data/ce6ToCe10.over.chain -i test_data/little.bam -u test.unmapped -o test.out
-
+- e.g.,
+```bash
+./FastRemap -f bam -c test_data/ce6ToCe10.over.chain -i test_data/little.bam -u test.unmapped -o test.out
+```
 
 ## To validate and compare two SAM outputs: 
-```
+```bash
 python ./validation/compare_outputs.py [input sam file 1] [input sam file 2] 
 ```
 
@@ -93,13 +100,13 @@ First, download the following files:
 Using the linux time command, get and write all runtime and memory stats output
 files to subdirectories ./evaluation/CrossMap and ./evaluation/FastRemap
 (depending on which tool was used), e.g.,: 
-``` 
+``` bash
 /usr/bin/time -v -p -o ./evaluation/FastRemap/sacCer1_sacCer2.time FastRemap -f bam -c sacCer1ToSacCer2.over.chain -i sacCer1_ERR1938683.bam -u fastremap_sacCer1_sacCer2_unmapped.bed -o fastremap_sacCer1_sacCer2.bam
 /usr/bin/time -v -p -o ./evaluation/crossmap/sacCer1_sacCer2.time CrossMap.py bam sacCer1ToSacCer2.over.chain sacCer1_ERR1938683.bam > crossmap_sacCer1_sacCer2.bam 
 ``` 
 
 Finally run the plotting script under the evaluation subdirectory: 
-```
+```bash
 cd evaluation 
 python plot_runtime.py 
 ```
