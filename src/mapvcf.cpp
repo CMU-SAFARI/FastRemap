@@ -18,7 +18,7 @@
 #include <seqan/sequence.h>
 
 using namespace seqan;
-void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile, std::string outfile, std::string liftoverfile, std::string refgenome, bool noCompAllele = false, bool compress = false, std::string cstyle = "a"){
+void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile, std::string outfile, std::string refgenome, bool noCompAllele = false, bool compress = false){
     /**
 	Convert genome coordinates in VCF format.
 	Parameters

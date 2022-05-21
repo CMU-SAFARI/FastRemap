@@ -7,6 +7,6 @@
 #include<string> 
 #include<stdio.h> 
 
-void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile, std::string outfile, std::string liftoverfile, std::string refgenome, bool noCompAllele, bool compress, std::string cstyle);
+void crossmap_vcf_file(std::map<std::string, ITree>& mapping, std::string infile, std::string outfile, std::string refgenome, bool noCompAllele = false, bool compress = false);
 
 #endif 

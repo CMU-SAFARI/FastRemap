@@ -6,6 +6,7 @@
 #include "mapbam.h" 
 #include "mapsam.h" 
 #include "mapbed.h"
+#include "mapvcf.h"
 #include "IntervalTree.h" 
 #include "common.h" 
 
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
 	// if enough arguments, check if the second == "bam" 
  	// chain file, in_file, unmapped_file, outfile 
 
-	std::string chain_file, in_file, unmapped_file, out_file;  
+	std::string chain_file, in_file, unmapped_file, out_file, ref_file;  
 
     int insert_size = 200; 
     int insert_size_stdev = 30; 
@@ -170,6 +171,9 @@ int main(int argc, char **argv) {
                                 if (argc >= 4) { 
                                         out_file = std::string(argv[optind+4]); 
                                 } 
+								if (argc >= 5) { 
+                                        ref_file = std::string(argv[optind+5]); 
+                                } 
 
                                 std::map<std::string, int> target_chrom_size; 
                                 std::map<std::string, int> source_chrom_size; 
@@ -180,7 +184,7 @@ int main(int argc, char **argv) {
                                 std::cout << "Unmapped File: " << unmapped_file << "\n";  
                                 std::cout << "Output File:   " << out_file << "\n"; 
 
-                                crossmap_bed_file(mapTree, chain_file, in_file, unmapped_file, out_file); 
+                                crossmap_vcf_file(mapTree, in_file, out_file, ref_file, false, false); // false's can be parametrized
                         } 
                 } 
 		else { 
