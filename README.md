@@ -19,7 +19,7 @@ The initial release of FastRemap is described in the following paper:
 [\[1\] Zhao et al. *CrossMap: A Versatile Tool for Coordinate Conversion between Genome Assemblies* Bioinformatics 2014.](https://academic.oup.com/bioinformatics/article/30/7/1006/234947?login=true) 
 
 ## FastRemap:
-    - Currently only supports BAM files as input 
+    - Currently only supports BAM, SAM, and BED files as input 
     - if not using gcc 10 or higher, can use the following library: https://github.com/tcbrindle/span
 
 ## To clone: 
